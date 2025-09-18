@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sales Entry Form</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 700px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[readonly] {
+            background-color: #eee;
+        }
+        button {
+            margin-top: 25px;
+            padding: 10px 20px;
+            background-color: #0078D4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005ea2;
+        }
+    </style>
+</head>
+<body>
+    <h2>Enter Sales Data</h2>
+    <form method="POST">
+        <label>Platform</label>
+        <select name="platform" required>
+            <option>Amazon</option>
+            <option>Flipkart</option>
+            <option>Myntra</option>
+        </select>
+
+        <label>Category</label>
+        <select name="category" id="category" required onchange="setDiscountRate()">
+            <option value="Electronics">Electronics</option>
+            <option value="Fashion">Fashion</option>
+            <option value="Home Decor">Home Decor</option>
+        </select>
+
+        <label>District</label>
+        <select name="district" required>
+            <option>Bengaluru Urban</option>
+            <option>Bengaluru Rural</option>
+            <option>Mysuru</option>
+            <option>Mangaluru</option>
+            <option>Hubballi-Dharwad</option>
+            <option>Belagavi</option>
+            <option>Tumakuru</option>
+            <option>Ballari</option>
+            <option>Shivamogga</option>
+            <option>Davangere</option>
+            <option>Udupi</option>
+            <option>Vijayapura</option>
+            <option>Kalaburagi</option>
+            <option>Raichur</option>
+            <option>Bidar</option>
+            <option>Bagalkot</option>
+            <option>Haveri</option>
+            <option>Gadag</option>
+            <option>Koppal</option>
+            <option>Chitradurga</option>
+            <option>Chikkamagaluru</option>
+            <option>Hassan</option>
+            <option>Mandya</option>
+            <option>Ramanagara</option>
+            <option>Kolar</option>
+            <option>Chikkaballapur</option>
+            <option>Yadgir</option>
+            <option>Kodagu</option>
+            <option>Dharwad</option>
+            <option>Bellary</option>
+        </select>
+
+        <label>Date</label>
+        <input type="text" name="date" value="" id="date" readonly>
+
+        <label>Orders</label>
+        <input type="number" name="orders" id="orders" required oninput="calculateConversionRate()">
+
+        <label>Returns</label>
+        <input type="number" name="returns" required>
+
+        <label>Revenue</label>
+        <input type="number" step="0.01" name="revenue" id="revenue" required oninput="calculateNetRevenue()">
+
+        <label>Ad Spend</label>
+        <input type="number" step="0.01" name="ad_spend" required>
+
+        <label>Visitors</label>
+        <input type="number" name="visitors" id="visitors" required oninput="calculateConversionRate()">
+
+        <label>Conversion Rate</label>
+        <input type="number" step="0.01" name="conversion_rate" id="conversion_rate" readonly>
+
+        <label>Discount Rate</label>
+        <input type="number" step="0.01" name="discount_rate" id="discount_rate" readonly>
+
+        <label>Net Revenue</label>
+        <input type="number" step="0.01" name="net_revenue" id="net_revenue" readonly>
+
+        <label>Customer Rating</label>
+        <input type="number" step="0.01" name="rating" required>
+
+        <label>Fulfillment Time</label>
+        <input type="number" step="0.01" name="fulfillment_time" required>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        // Set today's date
+        document.getElementById("date").value = new Date().toLocaleDateString('en-IN');
+
+        function setDiscountRate() {
+            const category = document.getElementById("category").value;
+            let rate = 0.1; // default
+
+            if (category === "Electronics") rate = 0.15;
+            else if (category === "Fashion") rate = 0.25;
+            else if (category === "Home Decor") rate = 0.2;
+
+            document.getElementById("discount_rate").value = rate.toFixed(2);
+            calculateNetRevenue();
+        }
+
+        function calculateConversionRate() {
+            const orders = parseInt(document.getElementById("orders").value) || 0;
+            const visitors = parseInt(document.getElementById("visitors").value) || 0;
+            const rate = visitors > 0 ? orders / visitors : 0;
+            document.getElementById("conversion_rate").value = rate.toFixed(2);
+        }
+
+        function calculateNetRevenue() {
+            const revenue = parseFloat(document.getElementById("revenue").value) || 0;
+            const discount = parseFloat(document.getElementById("discount_rate").value) || 0;
+            const net = revenue * (1 - discount);
+            document.getElementById("net_revenue").value = net.toFixed(2);
+        }
+
+        // Initialize discount rate on load
+        window.onload = setDiscountRate;
+    </script>
+</body>
+</html>
