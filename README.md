@@ -1,2 +1,2 @@
-Developed an interactive Power BI dashboard to analyze e-commerce sales performance across Karnataka cities, platforms, and product categories. The dashboard features dynamic filters, KPI cards, 
-forecasting, and simulated real-time updates to support strategic decision-making.
+This project simulates real-time sales data using Python and streams it into a CSV file, which is visualized in Power BI for dynamic business intelligence. It enables live tracking of metrics like revenue, returns, customer ratings, and fulfillment performance across platforms and districts.
+
